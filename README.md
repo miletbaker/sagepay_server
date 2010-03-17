@@ -11,6 +11,12 @@ As the server implementation does not fit the ActiveMerchant model (due to redir
 Installation
 ------------
 
+Make sure you have the HTTParty gem installed
+
+	sudo gem install htparty
+	
+Then install as a plugin
+
     script/plugin install git://github.com/miletbaker/sagepay_server.git
     
 Usage
