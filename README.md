@@ -50,4 +50,4 @@ or
 
 	SagepayServer.mode = :simulator # Use the simulator
 
-	
+Copyright (c) 2009 Go Tripod Ltd, released under the MIT license
