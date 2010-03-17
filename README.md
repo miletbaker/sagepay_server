@@ -22,7 +22,7 @@ Then install as a plugin
 Usage
 -----
 
-You should familiarise yourself with the SagePay Server Implementation API documentation found here: [http://www.sagepay.com/developers.asp]. You can call any transaction action on an instance of SagepayServer, _including payment, authenticate, deferred, release, abort, refund, repeat, void, manual, directrefund, authorise and cancel_
+You should familiarise yourself with the SagePay Server Implementation API documentation found here: [http://www.sagepay.com/developers.asp](http://www.sagepay.com/developers.asp). You can call any transaction action on an instance of SagepayServer, _including payment, authenticate, deferred, release, abort, refund, repeat, void, manual, directrefund, authorise and cancel_
 
 The Vendor, VPSVersion, TxType and Profile parameters are added automatically, just pass the others as arguments to the method. i.e. 
 
