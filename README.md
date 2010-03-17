@@ -13,7 +13,7 @@ Installation
 
 Make sure you have the HTTParty gem installed
 
-	sudo gem install htparty
+	sudo gem install httparty
 	
 Then install as a plugin
 
