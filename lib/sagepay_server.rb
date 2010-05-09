@@ -53,11 +53,10 @@ class SagepayServer
   
   parser Parser::Sagepay
   
-  def check_response(respones, security_key)
-  		hash_source = respones[:vps_tx_id].to_s + respones[:vendor_tx_code].to_s + respones[:status].to_s + respones[:tx_auth_no].to_s + @vendor_name + respones[:avscv2].to_s + security_key.to_s + respones[:address_result].to_s + respones[:post_code_result].to_s + respones[:cv2_result].to_s + respones[:gift_aid].to_s + respones[:"3_d_secure_status"].to_s + respones[:cavv].to_s + respones[:address_status].to_s + respones[:payer_status].to_s + respones[:card_type].to_s + respones[:last4_digits].to_s
+  def self.check_response(vendor_name, security_key, response)
+  		hash_source = response[:VPSTxId].to_s + response[:VendorTxCode].to_s + response[:Status].to_s + response[:TxAuthNo].to_s + vendor_name + response[:AVSCV2].to_s + security_key.to_s + response[:AddressResult].to_s + response[:PostCodeResult].to_s + response[:CV2Result].to_s + response[:GiftAid].to_s + response[:"3DSecureStatus"].to_s + response[:CAVV].to_s + response[:AddressStatus].to_s + response[:PayerStatus].to_s + response[:CardType].to_s + response[:Last4Digits].to_s
   		puts Digest::MD5.hexdigest(hash_source).upcase
-  		puts respones[:vps_signature]
-  		return respones[:vps_signature] == Digest::MD5.hexdigest(hash_source).upcase
+  		return response[:VPSSignature] == Digest::MD5.hexdigest(hash_source).upcase
   end
   
 end

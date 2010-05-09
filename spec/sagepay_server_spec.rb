@@ -139,24 +139,18 @@ describe SagepayServer do
   context "Decoding hash" do
     
     it "should identify hash as correct" do
-      SagepayServer.should_receive(:post).and_return({:vps_tx_id => "12345", :vendor_tx_code => "12", :status => "OK", :tx_auth_no => 987654321, :avscv2 => "ALL MATCH", :address_result => "MATCHED", :post_code_result => "MATCHED", :cv2_result => "MATCHED", :gift_aid => 0, :"3_d_secure_status" => "OK", :cavv => "h23h324j23", :address_status => "CONFIRMED", :payer_status => "VERIFIED", :card_type => "VISA", :last4_digits => "1234", :vps_signature => "D2F733F60BD97C3E1162C35C467BBDA2"})
-      s = SagepayServer.new("hello")
-      response = s.manual({})
-      s.check_response(response, "secret").should be_true
+      response = {:VPSTxId => "12345", :VendorTxCode => "12", :Status => "OK", :TxAuthNo => 987654321, :AVSCV2 => "ALL MATCH", :AddressResult => "MATCHED", :PostCodeResult => "MATCHED", :CV2Result => "MATCHED", :GiftAid => 0, :"3DSecureStatus" => "OK", :CAVV => "h23h324j23", :AddressStatus => "CONFIRMED", :PayerStatus => "VERIFIED", :CardType => "VISA", :Last4Digits => "1234", :VPSSignature => "D2F733F60BD97C3E1162C35C467BBDA2"}
+      SagepayServer.check_response("hello", "secret", response).should be_true
     end
     
-    it "should identify hash correctly with missing params" do
-      SagepayServer.should_receive(:post).and_return({:vps_tx_id => "12345", :vendor_tx_code => "12", :status => "OK", :tx_auth_no => 987654321, :avscv2 => "ALL MATCH", :address_result => "MATCHED", :post_code_result => "MATCHED", :cv2_result => "MATCHED", :cavv => "h23h324j23", :card_type => "VISA", :last4_digits => "1234", :vps_signature => "70E7EDAB35B06B0984E11419C8CFC266"})
-      s = SagepayServer.new("hello")
-      response = s.directrefund({})
-      s.check_response(response, "secret").should be_true
+    it "should identify VPSSignature as incorrect" do
+      response = {:VPSTxId => "12345", :VendorTxCode => "12", :Status => "OK", :TxAuthNo => 987654321, :AVSCV2 => "ALL MATCH", :AddressResult => "MATCHED", :PostCodeResult => "MATCHED", :CV2Result => "MATCHED", :GiftAid => 0, :"3DSecureStatus" => "OK", :CAVV => "h23h324j23", :AddressStatus => "CONFIRMED", :PayerStatus => "VERIFIED", :CardType => "VISA", :Last4Digits => "1234", :VPSSignature => "D2F733F60BD97C3E1162C35C467B3DA2"}
+      SagepayServer.check_response("hello", "secret", response).should be_false
     end
     
-    it "should identify hash as incorrect" do
-      SagepayServer.should_receive(:post).and_return({:vps_tx_id => "12344", :vendor_tx_code => "12", :status => "OK", :tx_auth_no => 987654321, :avscv2 => "ALL MATCH", :address_result => "MATCHED", :post_code_result => "MATCHED", :cv2_result => "MATCHED", :gift_aid => 0, :"3_d_secure_status" => "OK", :cavv => "h23h324j23", :address_status => "CONFIRMED", :payer_status => "VERIFIED", :card_type => "VISA", :last4_digits => "1234", :vps_signature => "D2F733F60BD97C3E1162C35C467BBDA2"})
-      s = SagepayServer.new("hello")
-      response = s.manual({})
-      s.check_response(response, "secret").should be_false
+    it "should identify value as incorrect" do
+      response = {:VPSTxId => "1234", :VendorTxCode => "12", :Status => "OK", :TxAuthNo => 987654321, :AVSCV2 => "ALL MATCH", :AddressResult => "MATCHED", :PostCodeResult => "MATCHED", :CV2Result => "MATCHED", :GiftAid => 0, :"3DSecureStatus" => "OK", :CAVV => "h23h324j23", :AddressStatus => "CONFIRMED", :PayerStatus => "VERIFIED", :CardType => "VISA", :Last4Digits => "1234", :VPSSignature => "D2F733F60BD97C3E1162C35C467B3DA2"}
+      SagepayServer.check_response("hello", "secret", response).should be_false
     end
     
   end
